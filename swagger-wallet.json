@@ -1,0 +1,338 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/wallet/{walletId}": {
+            "get": {
+                "operationId": "Get single wallet details",
+                "tags": [
+                    "Wallet"
+                ],
+                "description": "Get single wallet details",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "type": "string",
+                        "example": "5ffc1337bf12fc6b1d6561e8",
+                        "default": "5ffc1337bf12fc6b1d6561e8",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/components/responseData/getWallet"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Arguments"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/wallet": {
+            "post": {
+                "operationId": "Initialise wallet",
+                "tags": [
+                    "Wallet"
+                ],
+                "description": "Initialise wallet",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/requestBodies/addWallet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/components/responseData/createWallet"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Arguments"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/transact/{walletId}": {
+            "post": {
+                "operationId": "Perform Transaction",
+                "tags": [
+                    "Transactions"
+                ],
+                "description": "Perform Transaction on wallet.",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "type": "string",
+                        "example": "5ffc1337bf12fc6b1d6561e8",
+                        "default": "5ffc1337bf12fc6b1d6561e8",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/requestBodies/transaction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/components/responseData/createTransaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Arguments"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/transactions": {
+            "get": {
+                "operationId": "Get transactions by walletId",
+                "tags": [
+                    "Transactions"
+                ],
+                "description": "Get transactions by walletId",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "query",
+                        "type": "string",
+                        "example": "5ffc1337bf12fc6b1d6561e8",
+                        "default": "5ffc1337bf12fc6b1d6561e8",
+                        "required": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "example": 1,
+                        "default": 1,
+                        "minimum": 1,
+                        "type": "integer",
+                        "format": "int32",
+                        "required": true
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "example": 10,
+                        "default": 10,
+                        "minimum": 1,
+                        "type": "integer",
+                        "format": "int32",
+                        "required": true
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "type": "string",
+                        "example": "asc",
+                        "default": "desc"
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "type": "string",
+                        "example": "_id",
+                        "description": "amount , createdAt",
+                        "default": "_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/components/responseData/getTransactions"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Arguments"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": { },
+        "requestBodies": {
+            "addWallet": {
+                "properties": {
+                    "balance": {
+                        "type": "number",
+                        "required": true,
+                        "example": 50
+                    },
+                    "name": {
+                        "type": "string",
+                        "required": true,
+                        "example": "My wallet"
+                    }
+                }
+            },
+            "transaction": {
+                "properties": {
+                    "amount": {
+                        "type": "number",
+                        "required": true,
+                        "description": "Enter postive value for credit operation, negative value for debit operation.",
+                        "example": 50
+                    },
+                    "description": {
+                        "type": "string",
+                        "required": true,
+                        "example": "Phone recharge."
+                    }
+                }
+            }
+         },
+        "responseData": {
+            "getTransactions": {
+                "properties": {
+                    "currentPage": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "totalRecords": {
+                        "type": "integer",
+                        "example": 526
+                    },
+                    "perPage": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "previousPage": {
+                        "type": "null",
+                        "example": null
+                    },
+                    "nextPage": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "lastPage": {
+                        "type": "integer",
+                        "example": 53
+                    },
+                    "data": {
+                        "type": "array",
+                        "default": [ {
+                            "_id": "6589b62aef0a6b2f2c97190f",
+                            "description": "Phone recharge.",
+                            "amount": 50,
+                            "newBalance": 400,
+                            "type": "credit",
+                            "walletId": "65894a057afe2906e0f2c95c",
+                            "createdAt": "2023-12-25T17:04:42.304Z",
+                            "updatedAt": "2023-12-25T17:04:42.304Z"
+                          },
+                          {
+                            "_id": "6589b628ef0a6b2f2c97190a",
+                            "description": "Phone recharge.",
+                            "amount": 50,
+                            "newBalance": 350,
+                            "type": "credit",
+                            "walletId": "65894a057afe2906e0f2c95c",
+                            "createdAt": "2023-12-25T17:04:40.033Z",
+                            "updatedAt": "2023-12-25T17:04:40.033Z"
+                          } ]
+                    }
+                }
+            },
+            "createTransaction": {
+                "properties": {
+                    "balance": {
+                        "type": "integer",
+                        "default":300
+                    },
+                    "transactionId": {
+                        "type": "string",
+                        "format": "ObjectId",
+                        "default": "6589cd961ba1690c488d2fb9"
+                    }
+                }
+            },
+            "createWallet": {
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "format": "ObjectId",
+                        "default": "6589cd961ba1690c488d2fb9"
+                    },
+                    "balance": {
+                        "type": "integer",
+                        "default":300
+                    },
+                    "transactionId": {
+                        "type": "string",
+                        "format": "ObjectId",
+                        "default": "6589cd961ba1690c488d2fb9"
+                    },
+                    "name": {
+                        "type": "string",
+                        "default": "My wallet"
+                    },
+                    "date":{
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-07T07:28:04.649Z"
+                    }
+                }
+            },
+            "getWallet": {
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "format": "ObjectId",
+                        "default": "6589cd961ba1690c488d2fb9"
+                    },
+                    "balance": {
+                        "type": "integer",
+                        "default":300
+                    },
+                    "name": {
+                        "type": "string",
+                        "default": "My wallet"
+                    },
+                    "createdAt":{
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-07T07:28:04.649Z"
+                    },
+                    "updatedAt":{
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-07T07:28:04.649Z"
+                    }
+                }
+            }
+         }
+    }
+}
