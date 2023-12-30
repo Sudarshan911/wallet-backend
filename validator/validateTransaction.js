@@ -4,6 +4,7 @@ import Decimal from 'decimal.js'
 import { logger } from '../utils/logger.js';
 import { returnValidationError } from '../helper/commonHelper.js';
 import utilityConstants from "../constants/constants.js";
+import { getWalletCount } from '../odm/wallet.js';
 
 let errorType = null;
 export const validateCreateTransaction = [
@@ -13,13 +14,29 @@ export const validateCreateTransaction = [
         .bail()
         .exists()
         .not()
-        .isEmpty(),
+        .isEmpty()
+        .custom(async (v) => {
+            const exists = await getWalletCount({ _id: v });
+            if (exists.totalCount < 1) {
+                errorType = utilityConstants.errorFields.comment;
+                throw new Error(utilityConstants.enums.doesntExist);
+            }
+        })
+        .withMessage('Not Found'),
+    check('transactionType')
+        .trim()
+        .exists()
+        .not()
+        .isEmpty()
+        .isIn(utilityConstants.enums.transactionType),
     check('amount')
         .trim()
         .exists()
         .isNumeric()
         .not()
         .isEmpty()
+        .custom((value) => value > 0)
+        .withMessage('Number must be greater than 0')
         .custom((value) => {
             // Custom validation for 4 decimal places
             const decimalValue = new Decimal(value);

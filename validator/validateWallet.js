@@ -31,8 +31,9 @@ export const validateCreateWallet = [
         .exists()
         .not()
         .isEmpty()
-        .isInt({ min: 0 })
         .isNumeric()
+        .custom((value) => value > 0)
+        .withMessage('Number must be greater than 0')
         .custom((value) => {
             // Custom validation for 4 decimal places
             const decimalValue = new Decimal(value);
