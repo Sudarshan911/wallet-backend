@@ -42,3 +42,18 @@ export const getTransactionData = (limit, page, sort, query, select = utilityCon
       });
   });
 };
+
+export const getTransactionCount = (query) => {
+  logger.info('ORM::transaction@getTransactionCount');
+  return new Promise((resolve) => {
+    transaction
+      .countDocuments(query)
+      .then((totalCount) => {
+        resolve({ totalCount });
+      })
+      .catch((err) => {
+        logger.error(err);
+        throw new Error(err);
+      });
+  });
+};

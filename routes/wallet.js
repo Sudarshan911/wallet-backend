@@ -8,7 +8,7 @@ var router = express.Router();
 router.get('/wallet/:walletId', [validateGetWallet, getWallet,
 ]);
 
-router.post('/wallet', [validateCreateWallet, createWallet])
+router.post('/setup', [validateCreateWallet, createWallet])
 
 router.post('/transact/:walletId', [validateCreateTransaction, createTransaction])
 router.get('/transactions', [validateGetWallet, getTransactions,

@@ -40,7 +40,6 @@ const transactionSchema = new mongoose.Schema(
 
 transactionSchema.pre('save', function (next) {
     // Convert yourField to Decimal with maximum 4 decimal places
-    console.log(this.amount);
     const decimalValue = new Decimal(this.amount);
     this.amount =decimalValue.toDecimalPlaces(4);
 

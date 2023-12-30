@@ -21,7 +21,6 @@ export const connectWithRetry = (dbUrl = process.env.ATLAS_DNS) => {
   try {
     logger.info('Connecting... to MongoDB connection with retry');
     logger.info(dbUrl);
-    // console.log(options);
     return mongoose
       .connect(dbUrl, options)
       .then(() => {

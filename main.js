@@ -30,7 +30,6 @@ if (process.env.APP_ENV !== 'test') {
   connectWithRetry();
 }
 
-console.log(process.env.APP_ENV);
 const port = process.env.PORT;
 
 // Add Body Parser

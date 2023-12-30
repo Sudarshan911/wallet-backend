@@ -18,9 +18,9 @@ export const validateCreateTransaction = [
         .custom(async (v) => {
             const exists = await getWalletCount({ _id: v });
             if (exists.totalCount < 1) {
-                errorType = utilityConstants.errorFields.comment;
-                throw new Error(utilityConstants.enums.doesntExist);
+                throw new Error(utilityConstants.commonResponse.notFound);
             }
+            return true
         })
         .withMessage('Not Found'),
     check('transactionType')

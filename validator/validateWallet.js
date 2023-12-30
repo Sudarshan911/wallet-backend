@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import Decimal from 'decimal.js'
 import { logger } from '../utils/logger.js';
 import { returnValidationError } from '../helper/commonHelper.js';
+import { getWalletCount } from '../odm/wallet.js';
+import utilityConstants from "../constants/constants.js";
 
 let errorType = null;
 export const validateGetWallet = [
@@ -12,7 +14,15 @@ export const validateGetWallet = [
         .bail()
         .exists()
         .not()
-        .isEmpty(),
+        .isEmpty()
+        .custom(async (v) => {
+            const exists = await getWalletCount({ _id: v });
+            if (exists.totalCount < 1) {
+                throw new Error(utilityConstants.commonResponse.notFound);
+            }
+            return true
+        })
+        .withMessage('Not Found'),
     (req, res, next) => {
         try {
             logger.info('validateWallet@validateGetWallet');

@@ -24,7 +24,6 @@ const walletSchema = new mongoose.Schema(
 
 walletSchema.pre('save', function (next) {
   // Convert yourField to Decimal with maximum 4 decimal places
-  console.log(this.balance);
   const decimalValue = new Decimal(this.balance);
   this.balance =decimalValue.toDecimalPlaces(4);
   next();

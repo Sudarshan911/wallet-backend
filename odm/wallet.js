@@ -55,3 +55,18 @@ export const updateWallet = (where, data) => {
       });
   });
 };
+
+export const getWalletCount = (query) => {
+  logger.info('ORM::wallet@getWalletCount');
+  return new Promise((resolve) => {
+    wallet
+      .countDocuments(query)
+      .then((totalCount) => {
+        resolve({ totalCount });
+      })
+      .catch((err) => {
+        logger.error(err);
+        throw new Error(err);
+      });
+  });
+};

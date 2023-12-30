@@ -26,10 +26,11 @@ export default   {
   },
   commonResponse: {
     serverError: 'An Error occurred please try again',
+    notFound: 'Data not found.'
   },
   enums: {
-    transactionType: ['credit', 'debit'],
-    transactionTypeObject: { credit: 'credit', debit: 'debit'},
+    transactionType: ['Credit', 'Debit'],
+    transactionTypeObject: { credit: 'Credit', debit: 'Debit'},
     minimumValidation: { min: 1 },
     initialTransaction : 'Initialising wallet'
   },

@@ -38,13 +38,13 @@
                 }
             }
         },
-        "/wallet": {
+        "/setup": {
             "post": {
                 "operationId": "Initialise wallet",
                 "tags": [
                     "Wallet"
                 ],
-                "description": "Initialise wallet",
+                "description": "Initialise wallet. Balance is optional",
                 "parameters": [
                     {
                         "in": "body",
@@ -188,7 +188,6 @@
                 "properties": {
                     "balance": {
                         "type": "number",
-                        "required": true,
                         "example": 50
                     },
                     "name": {
@@ -210,6 +209,12 @@
                         "type": "string",
                         "required": true,
                         "example": "Phone recharge."
+                    },
+                    "transactionType": {
+                        "type": "string",
+                        "required": true,
+                        "enum":["Credit", "debit"],
+                        "example": "Credit"
                     }
                 }
             }

@@ -6,7 +6,6 @@ import { logger } from "../utils/logger.js"
 export const getWallet = async (req, res) => {
     try {
         logger.info('ORM::wallet@getWallet');
-        console.log(req.params.walletId);
         const walletData = await getWalletData(1, 1, null, { _id: req.params.walletId })
         res.status(utilityConstants.serviceResponseCodes.success).json(walletData.docs[0])
     } catch (error) {
@@ -21,8 +20,6 @@ export const getWallet = async (req, res) => {
 export const createWallet = async (req, res) => {
     try {
         logger.info('wallet@createWallet');
-        console.log(req.body);
-
         const walletData = await createWalletData({name: req.body.name, balance: req.body.amount})
         const transactionData = await createTransactionData({
             walletId: walletData._id,
