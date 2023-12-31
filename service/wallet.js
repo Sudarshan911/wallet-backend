@@ -20,7 +20,7 @@ export const getWallet = async (req, res) => {
 export const createWallet = async (req, res) => {
     try {
         logger.info('wallet@createWallet');
-        const walletData = await createWalletData({name: req.body.name, balance: req.body.balance})
+        const walletData = await createWalletData({name: req.body.name, balance: req.body.amount})
         const transactionData = await createTransactionData({
             walletId: walletData._id,
             description: utilityConstants.enums.initialTransaction,
