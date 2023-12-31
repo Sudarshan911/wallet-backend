@@ -130,6 +130,19 @@ describe('Testing Wallet API ', () => {
     done();
   }, utilityConstants.testCaseData.timeOut);
 
+  it('Should fail to create debit transaction with amount greater than wallet balance', async (done) => {
+    const response = await request(app)
+      .post(`/transact/${staticWalletId}`)
+      .send({
+        "amount": 5000,
+        "description": "Phone recharge.",
+        "transactionType": "Debit"
+      });
+    expect(response.status).toEqual(utilityConstants.serviceResponseCodes.error);
+    expect(response.body.param).toEqual('amount');
+    done();
+  }, utilityConstants.testCaseData.timeOut);
+
   it('Should fail to create transaction with invalid walletId', async (done) => {
     const response = await request(app)
       .post(`/transact/${invalidId}`)

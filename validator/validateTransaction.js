@@ -4,7 +4,7 @@ import Decimal from 'decimal.js'
 import { logger } from '../utils/logger.js';
 import { returnValidationError } from '../helper/commonHelper.js';
 import utilityConstants from "../constants/constants.js";
-import { getWalletCount } from '../odm/wallet.js';
+import { getWalletCount, getWalletData } from '../odm/wallet.js';
 
 let errorType = null;
 export const validateCreateTransaction = [
@@ -42,7 +42,16 @@ export const validateCreateTransaction = [
             const decimalValue = new Decimal(value);
             return decimalValue.decimalPlaces() <= 4;
         })
-        .withMessage('Maximum prcision limit is 4.'),
+        .withMessage('Maximum prcision limit is 4.')
+        .bail()
+        .custom(async (value, { req }) => {
+            if (req.body.transactionType === utilityConstants.enums.transactionTypeObject.credit) { return true }
+            const walletBalance = await getWalletData(1, 1, {}, { _id: req.params.walletId });
+            console.log(walletBalance.docs[0]?.balance > value);
+            if (walletBalance.docs[0]?.balance < value) {
+                throw new Error('Debit amount cant be greater than wallet balance');
+            }
+            }),
     check('description')
         .trim()
         .exists()
