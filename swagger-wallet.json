@@ -11,7 +11,7 @@
                 "tags": [
                     "Wallet"
                 ],
-                "description": "Get single wallet details",
+                "description": "Get single wallet details. \n Sample query : \n  { mongoose:{'arg':[{'_id':'65918e46cd3abf301c14d0c2'},{'limit':1,'projection':{'__v':0,'createdAt':0,'updatedAt':0},'skip':0}],'collection':'wallets','method':'find'}}",
                 "parameters": [
                     {
                         "name": "walletId",
@@ -44,7 +44,7 @@
                 "tags": [
                     "Wallet"
                 ],
-                "description": "Initialise wallet. Balance is optional",
+                "description": "Initialise wallet. Balance is optional. Insert record in transactions collection and create record in wallet collection  \n Sample query : \n  {'mongoose':{'arg':[{'__v':0,'_id':'6591e3a92c6adc0da0cecf76','balance':0,'createdAt':'2023-12-31T21:56:57.159Z','name':'My wallet','updatedAt':'2023-12-31T21:56:57.159Z'},'collection':'wallets','method':'insertOne'}} \n \n {'mongoose':{'arg':[{'__v':0,'_id':'6591e46a88d02e3650a9afe5','amount':50,'createdAt':'2023-12-31T22:00:10.848Z','description':'Phone recharge.','newBalance':350,'type':'Credit','updatedAt':'2023-12-31T22:00:10.848Z','walletId':'65918e46cd3abf301c14d0c2'}],'collection':'transactions','method':'insertOne'}}",
                 "parameters": [
                     {
                         "in": "body",
@@ -77,7 +77,7 @@
                 "tags": [
                     "Transactions"
                 ],
-                "description": "Perform Transaction on wallet. Use Credit or Debit for transactionType",
+                "description": "Perform Transaction on wallet. Use Credit or Debit for transactionType. Insert record in transactions collection and update wallets collection \n Sample query : \n  {'mongoose':{'arg':[{'_id':'65918e46cd3abf301c14d0c2'},{'$inc':{'balance':50},'$set':{'updatedAt':'2023-12-31T22:02:56.764Z'},'$setOnInsert':{'createdAt':'2023-12-31T22:02:56.764Z'}},{'projection':{},'remove':false,'returnDocument':'after','runValidators':true,'upsert':false}],'collection':'wallets','method':'findOneAndUpdate'}} \n \n {'mongoose':{'arg':[{'__v':0,'_id':'6591e5106927a543bcdb0f77','amount':50,'createdAt':'2023-12-31T22:02:56.776Z','description':'Phone recharge.','newBalance':400,'type':'Credit','updatedAt':'2023-12-31T22:02:56.776Z','walletId':'65918e46cd3abf301c14d0c2'},{'session':null}],'collection':'transactions','method':'insertOne'}}",
                 "parameters": [
                     {
                         "name": "walletId",
@@ -118,7 +118,7 @@
                 "tags": [
                     "Transactions"
                 ],
-                "description": "Get transactions by walletId",
+                "description": "Get transactions by walletId. Retrieve data from transactions collection  \n  Sample query : \n     {'mongoose':{'arg':[{'walletId':'65918e46cd3abf301c14d0c2'},{'limit':10,'projection':{'__v':0,'updatedAt':0},'skip':0,'sort':{'_id':-1}}],'collection':'transactions','method':'find'}}",
                 "parameters": [
                     {
                         "name": "walletId",

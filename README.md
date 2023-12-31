@@ -28,3 +28,12 @@ Its free hosting service, so it will spin down with inactivity. It may take some
 3. The business logic is wriiten in respectives files in service directory.
 4. Mongoose ODM is used for database connection and operations.
 5. Jest is being used for unit testing.
+
+# Demo video is placed in root directory (WalletDemo.mkv)
+# Sample queries are provided in swagger api descriptions
+
+# query design :
+1. 2 collections are involved in this application, wallets and transactions. Wallets collection will have its individual data and transactions collection will contains the respective transactions of the wallet. 
+2. Each transaction has a 'walletId' field which references the wallet collection.
+3. The Schema structure of the collections in maintained in the models directory.
+
