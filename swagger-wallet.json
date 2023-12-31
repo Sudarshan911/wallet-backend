@@ -17,8 +17,8 @@
                         "name": "walletId",
                         "in": "path",
                         "type": "string",
-                        "example": "5ffc1337bf12fc6b1d6561e8",
-                        "default": "5ffc1337bf12fc6b1d6561e8",
+                        "example": "65918e46cd3abf301c14d0c2",
+                        "default": "65918e46cd3abf301c14d0c2",
                         "required": true
                     }
                 ],
@@ -77,14 +77,14 @@
                 "tags": [
                     "Transactions"
                 ],
-                "description": "Perform Transaction on wallet.",
+                "description": "Perform Transaction on wallet. Use Credit or Debit for transactionType",
                 "parameters": [
                     {
                         "name": "walletId",
                         "in": "path",
                         "type": "string",
-                        "example": "5ffc1337bf12fc6b1d6561e8",
-                        "default": "5ffc1337bf12fc6b1d6561e8",
+                        "example": "65918e46cd3abf301c14d0c2",
+                        "default": "65918e46cd3abf301c14d0c2",
                         "required": true
                     },
                     {
@@ -124,8 +124,8 @@
                         "name": "walletId",
                         "in": "query",
                         "type": "string",
-                        "example": "5ffc1337bf12fc6b1d6561e8",
-                        "default": "5ffc1337bf12fc6b1d6561e8",
+                        "example": "65918e46cd3abf301c14d0c2",
+                        "default": "65918e46cd3abf301c14d0c2",
                         "required": true
                     },
                     {
@@ -213,7 +213,7 @@
                     "transactionType": {
                         "type": "string",
                         "required": true,
-                        "enum":["Credit", "debit"],
+                        "enum":["Credit", "Debit"],
                         "example": "Credit"
                     }
                 }

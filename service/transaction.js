@@ -8,16 +8,18 @@ export const createTransaction = async (req, res) => {
     try {
         logger.info('transaction@createTransaction');
         const currentWalletData = await getWalletData(1, 1, null, { _id: req.params.walletId });
+        const updatedBalance = (req.body.transactionType == utilityConstants.enums.transactionTypeObject.credit) ? currentWalletData.docs[0].balance + parseFloat(req.body.amount) : currentWalletData.docs[0].balance - parseFloat(req.body.amount)
+        
         const [updateTransactionResponse] = await Promise.all(
             [
                 createTransactionData({
                     walletId: req.params.walletId,
                     description: req.body.description,
                     amount: parseFloat(req.body.amount),
-                    newBalance: currentWalletData.docs[0].balance + parseFloat(req.body.amount),
+                    newBalance: updatedBalance ,
                     type: req.body.transactionType
                 }),
-                updateWallet({ _id: req.params.walletId }, { $inc: { balance: parseFloat(req.body.amount) } })
+                updateWallet({ _id: req.params.walletId }, { $inc: { balance: parseFloat( ((req.body.transactionType == utilityConstants.enums.transactionTypeObject.credit)) ? req.body.amount : -req.body.amount) } })
             ]
         )
 

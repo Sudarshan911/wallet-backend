@@ -31,7 +31,6 @@ if (process.env.APP_ENV !== 'test') {
 }
 
 const port = process.env.PORT;
-
 // Add Body Parser
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));

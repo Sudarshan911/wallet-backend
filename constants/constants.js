@@ -1,12 +1,6 @@
 export default   {
-  commonSkipFields: '-__v -updated_at -created_at',
+  commonSkipFields: '-__v -updatedAt -createdAt',
   defaultOrderFields: ['asc', 'desc'],
-  trashOperations: {
-    unlikeComment: 'unlikeComment',
-    delete: 'delete',
-    unlikeContent: 'unlikeContent',
-    removeContentFavourite: 'removeContentFavourite',
-  },
   modelConfig: {
     wallet: {
       model: 'wallet',

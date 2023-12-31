@@ -18,19 +18,6 @@ export const expressResponseHandler = (
     data: data.docs,
   });
 
-/**
- * validation function : check if both orderBy and sortBy are present
- * @param {Request} req
- */
-export const validateSortByOrderBy = (req) => {
-  if (
-    (req.query.orderBy && !req.query.sortBy)
-    || (!req.query.orderBy && req.query.sortBy)
-  ) {
-    throw new Error('Both sortBy and orderBy are required');
-  }
-  return true;
-};
 
 /**
  * returns validation error
@@ -50,4 +37,3 @@ export const returnValidationError = (res, err, errorType = null) => {
     throw new Error(error);
   }
 };
-

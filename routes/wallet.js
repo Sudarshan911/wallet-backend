@@ -5,18 +5,14 @@ import { validateCreateWallet, validateGetWallet } from '../validator/validateWa
 import express from 'express';
 var router = express.Router();
 
+router.post('/setup', [validateCreateWallet, createWallet])
 router.get('/wallet/:walletId', [validateGetWallet, getWallet,
 ]);
-
-router.post('/setup', [validateCreateWallet, createWallet])
-
 router.post('/transact/:walletId', [validateCreateTransaction, createTransaction])
 router.get('/transactions', [validateGetWallet, getTransactions,
 ]);
-
-router.get('/', [(req, res) => res.json({ 'msg': 111 })
+router.get('/health', [(req, res) => res.json({ 'msg': 'ok' })
 ]);
-
 
 export default router;
 
