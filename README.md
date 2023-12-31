@@ -5,7 +5,7 @@ Swagger Url : https://wallet-backend-ffne.onrender.com/api/docs/
 
 Its free hosting service, so it will spin down with inactivity. It may take some time to initialise the server on first hit.
 
-===================================================Steps to run the project=========================================================
+## Steps to run the project
 
 1. npm i
 2. In the .env file in root directory,
@@ -21,7 +21,7 @@ Its free hosting service, so it will spin down with inactivity. It may take some
 
 
 
-===================================================Project structure=========================================================
+## Project structure
 
 1. The server related code is maintained in main.js.
 2. express-validator is used as middleware for validating incoming requests. The validation functions are maintained in respective files in validator directory.
