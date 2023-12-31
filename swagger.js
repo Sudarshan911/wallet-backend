@@ -1,5 +1,4 @@
 import swaggerDocument from './swagger-wallet.json' assert  { type: "json" };;
-import  utilityConstants  from './constants/constants.js';
 
 
 export const wallet = (req, res, next) => {

@@ -28,10 +28,9 @@ export default   {
     minimumValidation: { min: 1 },
     initialTransaction : 'Initialising wallet'
   },
-
   baseAppUrl: 'http://localhost:3001',
-  errorTypes: {
-    'doesnt exist': 404,
-  },
+  testCaseData: {
+    timeOut: 30000
+  }
 
 };

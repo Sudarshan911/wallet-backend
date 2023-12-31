@@ -8,8 +8,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { logger } from './utils/logger.js';
 import { connectWithRetry } from './utils/mongoose.js';
-import walletRoute from './routes/wallet.js'
-import {wallet} from './swagger.js';
+import walletRoute from './routes/wallet.js';
+import { wallet } from './swagger.js';
 
 
 const app = express();
@@ -46,9 +46,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', walletRoute );
-app.use('/api/docs', wallet, swaggerUi.serve, swaggerUi.setup());
-
+app.use('/', walletRoute);
+if (process.env.APP_ENV !== 'test') {
+  app.use('/api/docs', wallet, swaggerUi.serve, swaggerUi.setup());
+}
 app.use((req, res, next) => {
   const notFound = {
     message: 'Endpoint not found',
