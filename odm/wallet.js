@@ -29,11 +29,11 @@ export const getWalletData = (limit, page, sort, query, select = utilityConstant
   });
 };
 
-export const createWalletData = (body) => {
+export const createWalletData = (body,session) => {
   logger.info('ORM::wallet@createWalletData');
   return new Promise((resolve) => {
     const walletData = new wallet(body);
-    walletData.save((err, item) => {
+    walletData.save(session,(err, item) => {
       if (err) {
         throw new Error(err);
       }
