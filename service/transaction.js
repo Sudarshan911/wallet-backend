@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { createTransactionData, getTransactionCount, getTransactionData } from "../odm/transaction.js";
 import { getWalletData, updateWallet } from "../odm/wallet.js";
 import utilityConstants from "../constants/constants.js";
@@ -5,11 +6,12 @@ import { logger } from "../utils/logger.js";
 import { expressResponseHandler } from "../helper/commonHelper.js";
 
 export const createTransaction = async (req, res) => {
+    const session = await mongoose.startSession();
     try {
         logger.info('transaction@createTransaction');
         const currentWalletData = await getWalletData(1, 1, null, { _id: req.params.walletId });
         const updatedBalance = (req.body.transactionType == utilityConstants.enums.transactionTypeObject.credit) ? currentWalletData.docs[0].balance + parseFloat(req.body.amount) : currentWalletData.docs[0].balance - parseFloat(req.body.amount)
-        
+        session.startTransaction(); // Handling transactions to maintain consistancy
         const [updateTransactionResponse] = await Promise.all(
             [
                 createTransactionData({
@@ -18,10 +20,11 @@ export const createTransaction = async (req, res) => {
                     amount: parseFloat(req.body.amount),
                     newBalance: updatedBalance ,
                     type: req.body.transactionType
-                }),
-                updateWallet({ _id: req.params.walletId }, { $inc: { balance: parseFloat( ((req.body.transactionType == utilityConstants.enums.transactionTypeObject.credit)) ? req.body.amount : -req.body.amount) } })
+                }, { session }),
+                updateWallet({ _id: req.params.walletId }, { $inc: { balance: parseFloat(((req.body.transactionType == utilityConstants.enums.transactionTypeObject.credit)) ? req.body.amount : -req.body.amount) } }, { session }),
             ]
         )
+        await session.commitTransaction();
 
         res.status(utilityConstants.serviceResponseCodes.success).json({ balance: updateTransactionResponse.newBalance, transactionId: updateTransactionResponse._id });
     } catch (error) {
@@ -29,6 +32,9 @@ export const createTransaction = async (req, res) => {
         res
             .status(utilityConstants.serviceResponseCodes.serverError)
             .json({ error: utilityConstants.commonResponse.serverError });
+    }
+    finally {
+        session.endSession();
     }
 }
 

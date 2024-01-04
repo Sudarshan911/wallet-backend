@@ -2,11 +2,11 @@ import  transaction  from '../models/transaction.js';
 import { logger } from "../utils/logger.js"
 import utilityConstants from "../constants/constants.js";
 
-export const createTransactionData = (body) => {
+export const createTransactionData = (body, session) => {
     logger.info('ORM::transaction@createTransactionData');
     return new Promise((resolve, reject) => {
       const transactionData = new transaction(body);
-      transactionData.save((err, item) => {
+      transactionData.save(session,(err, item) => {
         if (err) {
           // throw new Error(err);
           return reject(err)
